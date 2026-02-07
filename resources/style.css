@@ -270,6 +270,58 @@ section {
     box-shadow: 10px 10px 10px rgba(6, 16, 32, 0.1);
 }
 
+/* Table wrapper for mobile scrolling */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Aviation documents table */
+.docs-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+  font-size: 0.95rem;
+}
+
+.docs-table thead {
+  background: #f0f4f8;
+}
+
+.docs-table th,
+.docs-table td {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.docs-table th {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.docs-table tbody tr {
+  border-top: 1px solid #e0e6ed;
+}
+
+.docs-table tbody tr:hover {
+  background: #f7faff;
+}
+
+/* Status colors (optional but nice) */
+.docs-table td:last-child {
+  font-weight: 500;
+}
+
+/* Rounded corners inside card */
+.docs-table thead tr th:first-child {
+  border-top-left-radius: 10px;
+}
+.docs-table thead tr th:last-child {
+  border-top-right-radius: 10px;
+}
+
+
 @media (max-width: 768px) {
 
   .card.with-image,
