@@ -98,6 +98,7 @@ p {
   to { transform: translateX(500px); }
 }
 
+
 @keyframes moveCloudRight {
   from { transform: translateX(100px); }
   to { transform: translateX(-500px); }
