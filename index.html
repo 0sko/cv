@@ -675,7 +675,7 @@ l347 -3 0 -28 c0 -27 3 -29 53 -35 28 -3 82 -6 120 -6 60 0 67 -2 67 -20 0
     function onScroll() {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          handlePlaneScroll();
+          handlePlane();
           revealTimeline();
           ticking = false;
         });
