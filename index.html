@@ -676,7 +676,10 @@ l347 -3 0 -28 c0 -27 3 -29 53 -35 28 -3 82 -6 120 -6 60 0 67 -2 67 -20 0
         const overlayHeight = progress * 100;
         const planeScale = 0.1 + (progress * 12); // Scale
         plane.style.height = `${overlayHeight}vh`;
-        plane.querySelector('svg').style.transform = `translateY(${100 - (progress * 300)}%) scale(${planeScale})`;
+        // Use translate3d for hardware acceleration and round values for iOS
+        const translateY = Math.round(100 - (progress * 300));
+        const scale = Math.round(planeScale * 1000) / 1000;
+        plane.querySelector('svg').style.transform = `translate3d(0, ${translateY}%, 0) scale(${scale})`;
       }
     }
 
