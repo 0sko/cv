@@ -649,45 +649,65 @@ l347 -3 0 -28 c0 -27 3 -29 53 -35 28 -3 82 -6 120 -6 60 0 67 -2 67 -20 0
   </div>
 
   <script>
-    const plane = document.getElementById('planeOverlay');
-    const hero = document.querySelector('.hero');
-    const timeline = document.querySelector('.timeline');
-    const timelineItems = document.querySelectorAll('.timeline-item');
+    document.addEventListener("DOMContentLoaded", () => {
 
-    function revealTimeline() {
-      if (!timeline) return;
-      const rect = timeline.getBoundingClientRect();
-      const visible = Math.min(Math.max(window.innerHeight - rect.top, 0), rect.height);
-      timeline.style.setProperty('--line-height', `${visible}px`);
-      timelineItems.forEach(item => {
-        if (item.getBoundingClientRect().top < window.innerHeight * 0.9) {
-          item.classList.add('active');
-        }
-      });
-    }
+      const plane = document.getElementById("planeOverlay");
+      const hero = document.querySelector(".hero");
+      const timeline = document.querySelector(".timeline");
+      const timelineItems = document.querySelectorAll(".timeline-item");
+      const planeSvg = plane ? plane.querySelector("svg") : null;
 
-    function handlePlane() {
-      const scroll = window.scrollY;
-      const windowH = window.innerHeight;
-
-      // Grow the overlay and scale the plane
-      if (scroll < windowH) {
-        const progress = scroll / windowH;
-        const overlayHeight = progress * 100;
-        const planeScale = 0.1 + (progress * 12); // Scale
-        plane.style.height = `${overlayHeight}vh`;
-        // Use translate3d for hardware acceleration and round values for iOS
-        const translateY = Math.round(100 - (progress * 300));
-        const scale = Math.round(planeScale * 1000) / 1000;
-        plane.querySelector('svg').style.transform = `translate3d(0, ${translateY}%, 0) scale(${scale})`;
+      function getScrollY() {
+        return window.pageYOffset || document.documentElement.scrollTop;
       }
-    }
 
-    window.addEventListener('scroll', () => {
-      handlePlane();
-      revealTimeline();
+      function revealTimeline() {
+        if (!timeline) return;
+
+        const rect = timeline.getBoundingClientRect();
+        const visible = Math.min(Math.max(window.innerHeight - rect.top, 0), rect.height);
+
+        timeline.style.setProperty("--line-height", visible + "px");
+
+        timelineItems.forEach(item => {
+          const itemRect = item.getBoundingClientRect();
+          if (itemRect.top < window.innerHeight * 0.9) {
+            item.classList.add("active");
+          }
+        });
+      }
+
+      function handlePlane() {
+        if (!plane || !planeSvg) return;
+
+        const scroll = getScrollY();
+        const windowH = window.innerHeight;
+
+        if (scroll < windowH) {
+          const progress = scroll / windowH;
+
+          const overlayHeight = progress * 100;
+          const planeScale = 0.1 + (progress * 12);
+
+          plane.style.height = overlayHeight + "vh";
+
+          planeSvg.style.transform =
+            "translate3d(0," + (100 - progress * 300) + "%,0) scale(" + planeScale + ")";
+        }
+      }
+
+      function onScroll() {
+        requestAnimationFrame(() => {
+          handlePlane();
+          revealTimeline();
+        });
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
+
+      onScroll();
     });
-
   </script>
 </div>
 </body>

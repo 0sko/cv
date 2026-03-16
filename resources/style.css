@@ -155,6 +155,8 @@ p {
 }
 
 .plane-overlay svg {
+    will-change: transform;
+    transform-origin: center;
     width: 300px;
     height: auto;
     fill: var(--plane-color);
